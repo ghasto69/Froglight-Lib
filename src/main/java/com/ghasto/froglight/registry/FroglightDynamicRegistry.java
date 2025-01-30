@@ -15,13 +15,14 @@ public class FroglightDynamicRegistry {
     //if only we could <T> Map<ResourceKey<Registry<T>>, Map<ResourceKey<T>, Function<DynamicRegistryContext, T>>>
     private static final Map<ResourceKey<?>, Key2FunctionMap<?>> MAP = new HashMap<>();
 
-    public static <T> void register(ResourceKey<Registry<T>> registry, ResourceKey<T> key, Function<DynamicRegistryContext, T> function) {
+    public static <T> ResourceKey<T> register(ResourceKey<Registry<T>> registry, ResourceKey<T> key, Function<DynamicRegistryContext, T> function) {
         Key2FunctionMap<T> map = getOrCreateRegistry(registry);
         if(map.containsKey(key)) {
             throw new RuntimeException("Key "+key.location()+" has already been registered to registry "+registry.location());
         } else {
             map.put(key, function);
         }
+        return key;
     }
 
     @SuppressWarnings("unchecked")
