@@ -56,7 +56,7 @@ public class FroglightRegistry {
     public <T extends Item> T item(String name, Function<Item.Properties, T> factory) {
         return register(name, BuiltInRegistries.ITEM, factory.apply(
                 Objects.requireNonNullElse(defaultItemProperties, new Item.Properties())
-//                        .setId(key(name, Registries.ITEM))
+                        .setId(key(name, Registries.ITEM))
         ));
     }
 
@@ -64,7 +64,7 @@ public class FroglightRegistry {
     public <T extends Block> T block(String name, Function<BlockBehaviour.Properties, T> blockFactory) {
         return register(name, BuiltInRegistries.BLOCK, blockFactory.apply(
                 Objects.requireNonNullElse(defaultBlockProperties, BlockBehaviour.Properties.of())
-//                        .setId(key(name, Registries.BLOCK))
+                        .setId(key(name, Registries.BLOCK))
         ));
     }
 
@@ -96,7 +96,7 @@ public class FroglightRegistry {
 
     /* Entity Registry Helpers */
     public <T extends Entity> EntityType<T> entity(String name, MobCategory spawnGroup, EntityType.EntityFactory<T> entityFactory, Function<EntityType.Builder<T>, EntityType.Builder<T>> factory) {
-        return register(name, BuiltInRegistries.ENTITY_TYPE, factory.apply(EntityType.Builder.of(entityFactory, spawnGroup)).build(/*key(name, Registries.ENTITY_TYPE)*/));
+        return register(name, BuiltInRegistries.ENTITY_TYPE, factory.apply(EntityType.Builder.of(entityFactory, spawnGroup)).build(key(name, Registries.ENTITY_TYPE)));
     }
 
     /* Item Group Registry Helpers */
