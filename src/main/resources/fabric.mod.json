@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"com.ghasto.froglight.FroglightLib"
+		],
+		"client": [
+			"com.ghasto.froglight.FroglightLibClient"
 		]
 	},
 	"mixins": [
@@ -30,7 +33,7 @@
 	},
 	"custom": {
 		"loom:injected_interfaces": {
-			"net/minecraft/class_1792\u0024class_1793": ["com/ghasto/froglight/item/FroglightItem\u0024Settings"]
+			"net/minecraft/class_1792\u0024class_1793": ["com/ghasto/froglight/item/FroglightItemProperties"]
 		}
 	}
 }

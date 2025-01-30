@@ -1,25 +1,19 @@
 package com.ghasto.froglight.mixin;
 
-import com.ghasto.froglight.item.ItemGroupEntries;
-import com.ghasto.froglight.registry.FroglightRegistrate;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.registry.RegistryKey;
-import org.spongepowered.asm.mixin.Final;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Optional;
-import java.util.Set;
-
 @Mixin(Item.class)
 public class ItemMixin {
     @Inject(at = @At("TAIL"), method = "<init>")
-    private void init(Item.Settings settings, CallbackInfo ci) {
-        if(!settings.getGroup().isEmpty())
-            ItemGroupEntries.addItemToGroup(settings.getGroup().get(), (Item) (Object) this);
+    private void init(Item.Properties settings, CallbackInfo ci) {
+        settings.froglight_lib$getBurnTime().ifPresent(burnTime -> FuelRegistry.INSTANCE.add((ItemLike) this, burnTime));
+        settings.froglight_lib$getTab().ifPresent(itemGroup -> ItemGroupEvents.modifyEntriesEvent(itemGroup).register(entries -> entries.accept((ItemLike) this)));
     }
 }
